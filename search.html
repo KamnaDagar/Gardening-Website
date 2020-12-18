@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            
+            background-image: url("https://media.gettyimages.com/videos/bamboo-fence-background-video-id1022815874?s=640x640");
+        }
+        h1 {background-color: #98ecb2; text-align: center;box-sizing: 100px; font-size: 80px;font-style: italic;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
+        #searchFlower{width: 50%; height:50px; left: 40%;}
+        input {text-align: center;font-size: 20px;}
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+         background-color: azure;
+        }
+        
+        td, th {
+          border: 1px solid #e08888;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+         background-color: #98ecb2;
+        }
+        </style>
+    <title>Gardening</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchFlower").focusout(function () {
+                $.get("http://localhost:3000/" + $("#searchFlower").val(), function (records) {
+                    var data = "<tr><th>S.No</th><th>Description</th><th>Link</th></tr>";
+                    console.log(JSON.stringify(records));
+                    for(var idx in records) {
+                        var serialNum = parseInt(idx) + 1
+                        data += "<tr><td>"+ (serialNum)+"<td>"+records[idx].Name + "</td><td><a target=\"_blank\" href="+ records[idx].Link +">Buy</a></td></tr>";
+                    }
+                    $("#response").html(data);
+                    console.log(JSON.stringify(data));
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <div><marquee direction="right";><h1>BUY NOW!!</h1></marquee></div>
+    <div class="searchbox"><center><input type="text" id="searchFlower"></center></div><br><br>
+    <div>
+        <table id="response">
+    
+        </table>
+    </div>
+    
+
+</body>
+</html>
